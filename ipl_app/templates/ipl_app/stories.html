@@ -1,0 +1,60 @@
+<div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+  Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Stacked column chart'
+    },
+    xAxis: {
+        categories: ['Toss Winner', 'Toss Loser']
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Wins based on toss results'
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+        }
+    },
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+    },
+    tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true,
+                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+            }
+        }
+    },
+    series: [{
+        name: 'Win by runs',
+        data: [126, 161]
+    }, {
+        name: 'Win by wickets',
+        data: [196, 143]
+    }]
+});
+</script>
+<p><h3><a href="{% url 'home' %}">Go back to home page</a></h3></p>

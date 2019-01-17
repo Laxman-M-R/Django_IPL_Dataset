@@ -1,0 +1,25 @@
+<div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Extra Runs Given Per Team'
+      },
+      xAxis: {
+          categories: [
+            {% for run_count in extra_runs %}'{{ run_count.bowling_team }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+          ]
+      },
+      series: [{
+          name: 'Teams',
+          data: [
+            {% for run_count in extra_runs %}{{ run_count.extra_runs }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'black'
+      }]
+  });
+</script>
+<p><h3><a href="{% url 'home' %}">Go back to home page</a></h3></p>

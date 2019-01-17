@@ -1,0 +1,29 @@
+<!-- <head><link rel="shortcut icon" href=""></head> -->
+<div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Matches Played per season'
+      },
+      xAxis: {
+          categories: [
+            {% for match in matches_played %}'{{ match.season }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+          ]
+      },
+      series: [{
+          name: 'Matches Played',
+          data: [
+            {% for match in matches_played %}{{ match.matches_played }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'black'
+      }]
+  });
+</script>
+
+<p><h3><a href="{% url 'home' %}">Go back to home page</a></h3></p>
+
+

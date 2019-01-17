@@ -1,0 +1,94 @@
+<head><link rel="shortcut icon" href=""></head>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<div id="matches_per_season"></div>
+<script>
+    var jsonObject = JSON.parse('{{ matches_won | safe }}');
+    var series = [];
+    var names = [];
+    for (let match = 0; match < jsonObject.length; match++) {
+        if (names.indexOf(jsonObject[match].winner) !== -1) {
+            series[names.indexOf(jsonObject[match].winner)].data.push({
+            x: jsonObject[match].season,
+            y: jsonObject[match].matches_won
+            })
+        } else {
+            names.push(jsonObject[match].winner)
+            series.push({
+            name: jsonObject[match].winner,
+            data: [{
+                x: jsonObject[match].season,
+                y: jsonObject[match].matches_won
+            }]
+            })
+        }
+        }
+
+    Highcharts.chart('matches_per_season', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Matches Won Per Season',
+        style: {
+        "fontSize": "16px",
+        "font-weight": "bold"
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    xAxis: {
+        labels: {
+        style: {
+            fontWeight: 'bold'
+        }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+        text: 'Matches won per team',
+        style: {
+            fontWeight: 'bold'
+        }
+        },
+        stackLabels: {
+        enabled: false,
+        style: {
+            fontWeight: 'bold',
+            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+        }
+        }
+    },
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false,
+        itemStyle: {
+        fontSize: '12px',
+        font: '12pt',
+        }
+    },
+    tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+    },
+    plotOptions: {
+        column: {
+        stacking: 'normal',
+        dataLabels: {
+            enabled: false,
+            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+        }
+        }
+    },
+    series: series
+    });
+</script>
+<p><h3><a href="{% url 'home' %}">Go back to home page</a></h3></p>

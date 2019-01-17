@@ -1,0 +1,25 @@
+<div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Most Economical Bowler'
+      },
+      xAxis: {
+          categories: [
+            {% for bowlers in econ_bowlers %}'{{ bowlers.bowler }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+          ]
+      },
+      series: [{
+          name: 'Bowlers',
+          data: [
+            {% for bowlers in econ_bowlers %}{{ bowlers.economy }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          ],
+          color: 'black'
+      }]
+  });
+</script>
+<p><h3><a href="{% url 'home' %}">Go back to home page</a></h3></p>
